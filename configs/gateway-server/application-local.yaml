@@ -1,0 +1,8 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: user-service
+          uri: lb://user-service      # Eureka에서 user-service 찾아서 로드밸런싱
+          predicates:
+            - Path=/api/user/** #추후 경로에 맞게 수정필요
