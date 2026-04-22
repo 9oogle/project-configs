@@ -1,0 +1,12 @@
+#로컬환경 실행시 적용
+#application.yaml + application-local.yaml(덮어쓰기)
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/goggles
+    username: ${USERNAME}
+    password: ${PASSWORD}
+    driver-class-name: org.postgresql.Driver
+#    hikari:
+#      maximum-pool-size: 10
+#      minimum-idle: 5
+#      connection-timeout: 30000
