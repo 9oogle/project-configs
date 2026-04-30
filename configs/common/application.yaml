@@ -1,14 +1,29 @@
+# spring cloud loadbalancer
+spring:
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+
+    openfeign:
+      circuitbreaker:
+        enabled: true
+
+# common Feign timeout setting
+feign:
+  client:
+    default:
+      connectTimeout: 5000
+      readTimeout: 2000
+      loggerLevel: full
+
+# eureka server setting
 eureka:
-  instance:
-    prefer-ip-address : false  # 서비스가 Eureka에 등록될 때 IP 대신 hostname으로 등록 false = hostname 사용, true = IP 사용
-    hostname: ${HOSTNAME:localhost} # 등록할 hostname. 환경변수 HOSTNAME이 있으면 그 값, 없으면 localhost
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://${EUREKA_SERVER_URL1:localhost}:9001/eureka/,
-        http://${EUREKA_SERVER_URL2:localhost}:9002/eureka/
-
+      defaultZone: http://${EUREKA_SERVER_URL1:localhost}:9001/eureka/,http://${EUREKA_SERVER_URL2:localhost}:9002/eureka/
 
 # Actuator - refresh 엔드포인트 활성화 (무중단 설정 변경에 필수)
 management:

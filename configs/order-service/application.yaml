@@ -1,0 +1,188 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${DB_URL}/postgres
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  jpa:
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: false
+        use_sql_comments: false
+        default_schema: order_db
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    generate-ddl: false
+
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default-read:
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 30s
+        slowCallDurationThreshold: 3s
+        slowCallRateThreshold: 50
+        permittedNumberOfCallsInHalfOpenState: 2
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        eventConsumerBufferSize: 10
+        recordExceptions:
+          - java.net.SocketTimeoutException
+          - feign.FeignException.InternalServerError
+          - feign.FeignException.ServiceUnavailable
+          - feign.FeignException.GatewayTimeout
+          - feign.RetryableException
+        ignoreExceptions:
+          - com.goggles.common.exception.BadRequestException
+          - com.goggles.common.exception.ConflictException
+          - com.goggles.common.exception.ForbiddenException
+          - com.goggles.common.exception.NotFoundException
+          - com.goggles.common.exception.UnAuthorizedException
+          - org.springframework.web.bind.MethodArgumentNotValidException
+          - jakarta.validation.ConstraintViolationException
+          - org.springframework.http.converter.HttpMessageNotReadableException
+          - java.lang.IllegalArgumentException
+
+      default-write:
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 30
+        waitDurationInOpenState: 60s
+        slowCallDurationThreshold: 3s
+        slowCallRateThreshold: 50
+        permittedNumberOfCallsInHalfOpenState: 2
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        eventConsumerBufferSize: 10
+        recordExceptions:
+          - java.net.SocketTimeoutException
+          - feign.FeignException.InternalServerError
+          - feign.FeignException.ServiceUnavailable
+          - feign.FeignException.GatewayTimeout
+          - feign.RetryableException
+        ignoreExceptions:
+          - com.goggles.common.exception.BadRequestException
+          - com.goggles.common.exception.ConflictException
+          - com.goggles.common.exception.ForbiddenException
+          - com.goggles.common.exception.NotFoundException
+          - com.goggles.common.exception.UnAuthorizedException
+          - org.springframework.web.bind.MethodArgumentNotValidException
+          - jakarta.validation.ConstraintViolationException
+          - org.springframework.http.converter.HttpMessageNotReadableException
+          - java.lang.IllegalArgumentException
+
+      default-cancel:
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 30
+        waitDurationInOpenState: 60s
+        slowCallDurationThreshold: 3s
+        slowCallRateThreshold: 50
+        permittedNumberOfCallsInHalfOpenState: 2
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        eventConsumerBufferSize: 10
+        recordExceptions:
+          - java.net.SocketTimeoutException
+          - feign.FeignException.InternalServerError
+          - feign.FeignException.ServiceUnavailable
+          - feign.FeignException.GatewayTimeout
+          - feign.RetryableException
+        ignoreExceptions:
+          - com.goggles.common.exception.BadRequestException
+          - com.goggles.common.exception.ConflictException
+          - com.goggles.common.exception.ForbiddenException
+          - com.goggles.common.exception.NotFoundException
+          - com.goggles.common.exception.UnAuthorizedException
+          - org.springframework.web.bind.MethodArgumentNotValidException
+          - jakarta.validation.ConstraintViolationException
+          - org.springframework.http.converter.HttpMessageNotReadableException
+          - java.lang.IllegalArgumentException
+
+    instances:
+      lecture-service-write:
+        baseConfig: default-write
+      mentoring-service-write:
+        baseConfig: default-write
+      lecture-service-cancel:
+        baseConfig: default-cancel
+      mentoring-service-cancel:
+        baseConfig: default-cancel
+      user-service-read:
+        baseConfig: default-read
+
+  retry:
+    configs:
+      default:
+        maxAttempts: 3
+        waitDuration: 1s
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 2.0
+        retryExceptions:
+          - java.net.SocketTimeoutException
+          - feign.FeignException.InternalServerError
+          - feign.FeignException.ServiceUnavailable
+          - feign.FeignException.GatewayTimeout
+          - feign.RetryableException
+        ignoreExceptions:
+          - com.goggles.common.exception.BadRequestException
+          - com.goggles.common.exception.ConflictException
+          - com.goggles.common.exception.ForbiddenException
+          - com.goggles.common.exception.NotFoundException
+          - com.goggles.common.exception.UnAuthorizedException
+          - org.springframework.web.bind.MethodArgumentNotValidException
+          - jakarta.validation.ConstraintViolationException
+          - org.springframework.http.converter.HttpMessageNotReadableException
+          - java.lang.IllegalArgumentException
+
+      default-cancel:
+        maxAttempts: 2
+        waitDuration: 2s
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 2.0
+        retryExceptions:
+          - java.net.SocketTimeoutException
+          - feign.FeignException.InternalServerError
+          - feign.FeignException.ServiceUnavailable
+          - feign.FeignException.GatewayTimeout
+          - feign.RetryableException
+        ignoreExceptions:
+          - com.goggles.common.exception.BadRequestException
+          - com.goggles.common.exception.ConflictException
+          - com.goggles.common.exception.ForbiddenException
+          - com.goggles.common.exception.NotFoundException
+          - com.goggles.common.exception.UnAuthorizedException
+          - org.springframework.web.bind.MethodArgumentNotValidException
+          - jakarta.validation.ConstraintViolationException
+          - org.springframework.http.converter.HttpMessageNotReadableException
+          - java.lang.IllegalArgumentException
+
+    instances:
+      lecture-service-write:
+        baseConfig: default
+      mentoring-service-write:
+        baseConfig: default
+      lecture-service-cancel:
+        baseConfig: default-cancel
+      mentoring-service-cancel:
+        baseConfig: default-cancel
+      user-service-read:
+        baseConfig: default
+
+server:
+  port: 9007
+
+eureka:
+  instance:
+    hostname: ${HOSTNAME}
+    prefer-ip-address: false
