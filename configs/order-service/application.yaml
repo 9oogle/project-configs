@@ -22,6 +22,21 @@ spring:
       circuitbreaker:
         enabled: true
 
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 3000
+        readTimeout: 5000      # order는 비즈니스 로직이 복잡하니까 override
+
+      lecture-service:
+        connectTimeout: 3000
+        readTimeout: 8000      # 강의 예약은 특히 오래 걸릴 수 있으니 별도 설정
+
+      mentoring-service:
+        connectTimeout: 3000
+        readTimeout: 8000
+
 resilience4j:
   circuitbreaker:
     configs:
@@ -108,6 +123,18 @@ resilience4j:
           - jakarta.validation.ConstraintViolationException
           - org.springframework.http.converter.HttpMessageNotReadableException
           - java.lang.IllegalArgumentException
+
+    timelimiter:
+      configs:
+        default-read:
+          timeout-duration: 3s
+          cancel-running-future: true
+        default-write:
+          timeout-duration: 10s
+          cancel-running-future: true
+        default-cancel:
+          timeout-duration: 5s
+          cancel-running-future: true
 
     instances:
       lecture-service-write:
