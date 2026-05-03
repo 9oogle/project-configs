@@ -32,6 +32,21 @@ management:
       exposure:
         include: refresh, health, info
 
+# swagger setting
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  swagger-ui:
+    operations-sorter: alpha
+    tags-sorter: alpha
+    disable-swagger-default-url: true
+    display-request-duration: true
+    doc-expansion: none
+  paths-to-match:
+    - /**
+
 # 공통 로깅 레벨
 logging:
   level:
