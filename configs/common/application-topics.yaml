@@ -1,0 +1,5 @@
+topics:
+  order:
+    payment-pending: order.payment-pending.v1
+    completed: order.completed.v1
+    cancelled: order.cancelled.v1

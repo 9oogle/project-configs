@@ -96,7 +96,7 @@ resilience4j:
           - org.springframework.http.converter.HttpMessageNotReadableException
           - java.lang.IllegalArgumentException
 
-      default-cancel:
+      default-rollback:
         slidingWindowType: COUNT_BASED
         slidingWindowSize: 10
         minimumNumberOfCalls: 5
@@ -132,7 +132,7 @@ resilience4j:
       default-write:
         timeout-duration: 10s
         cancel-running-future: true
-      default-cancel:
+      default-rollback:
         timeout-duration: 5s
         cancel-running-future: true
 
@@ -142,9 +142,13 @@ resilience4j:
       mentoring-service-write:
         baseConfig: default-write
       lecture-service-cancel:
-        baseConfig: default-cancel
+        baseConfig: default-write
       mentoring-service-cancel:
-        baseConfig: default-cancel
+        baseConfig: default-write
+      lecture-service-rollback:
+        baseConfig: default-rollback
+      mentoring-service-rollback:
+        baseConfig: default-rollback
       user-service-read:
         baseConfig: default-read
 
@@ -172,7 +176,7 @@ resilience4j:
           - org.springframework.http.converter.HttpMessageNotReadableException
           - java.lang.IllegalArgumentException
 
-      default-cancel:
+      default-rollback:
         maxAttempts: 2
         waitDuration: 2s
         enableExponentialBackoff: true
@@ -200,9 +204,13 @@ resilience4j:
       mentoring-service-write:
         baseConfig: default
       lecture-service-cancel:
-        baseConfig: default-cancel
+        baseConfig: default
       mentoring-service-cancel:
-        baseConfig: default-cancel
+        baseConfig: default
+      lecture-service-rollback:
+        baseConfig: default-rollback
+      mentoring-service-rollback:
+        baseConfig: default-rollback
       user-service-read:
         baseConfig: default
 
