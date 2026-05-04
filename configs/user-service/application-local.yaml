@@ -1,5 +1,4 @@
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:9013/goggles
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update

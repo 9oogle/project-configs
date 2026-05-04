@@ -1,20 +1,8 @@
 spring:
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${DB_URL}/postgres
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
-
   jpa:
     properties:
       hibernate:
-        show_sql: false
-        format_sql: false
-        use_sql_comments: false
-        default_schema: order_db
-    hibernate:
-      ddl-auto: validate
-    open-in-view: false
+        default_schema: order
     generate-ddl: false
 
   cloud:
@@ -211,8 +199,8 @@ server:
 
 eureka:
   instance:
-    hostname: ${HOSTNAME}
-    prefer-ip-address: false
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${random.value}
 
 management:
   endpoints:
@@ -234,12 +222,9 @@ management:
   tracing:
     sampling:
       probability: 1.0
-
-zipkin:
-  tracing:
-    endpoint: "${ZIPKIN_ENDPOINT:http://localhost:9411/api/v2/spans}"
+  zipkin:
+    tracing:
+      endpoint: "${ZIPKIN_ENDPOINT:http://localhost:9411/api/v2/spans}"
 
 springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
   version: '1.0.0'
