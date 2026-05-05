@@ -2,7 +2,7 @@ spring:
   jpa:
     properties:
       hibernate:
-        default_schema: order
+        default_schema: order_db
     generate-ddl: false
 
   cloud:
