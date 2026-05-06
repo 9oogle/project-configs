@@ -3,8 +3,13 @@ spring:
     name: lecture-service
 
   jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    open-in-view: false
     properties:
       hibernate:
+        format_sql: true
         default_batch_fetch_size: 100
         default_schema: lecture
 
@@ -12,6 +17,7 @@ spring:
     hikari:
       maximum-pool-size: 20
       minimum-idle: 10
+      connection-timeout: 30000
 
   data:
     redis:
@@ -44,6 +50,19 @@ spring:
       group-id: ${spring.application.name}
       auto-offset-reset: earliest
       enable-auto-commit: false
+    listener:
+      missing-topics-fatal: false
+      ack-mode: record
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      hub-server:
+        failure-rate-threshold: 50
+        minimum-number-of-calls: 5
+        sliding-window-size: 10
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 3
 
 server:
   port: 9005
@@ -59,7 +78,12 @@ management:
       probability: 0.1
   zipkin:
     tracing:
-      endpoint: http://${MONITORING_HOST}:9411/api/v2/spans
+      endpoint: http://${MONITORING_HOST:localhost}:9411/api/v2/spans
   metrics:
     tags:
       application: ${spring.application.name}
+
+springdoc:
+  swagger-ui:
+    operationsSorter: method
+    tagsSorter: alpha
