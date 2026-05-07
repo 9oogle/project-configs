@@ -1,7 +1,18 @@
 topics:
   order:
-    completed: prod-order-completed
+    payment-pending: order.payment-pending.v1
+    completed: order.completed.v1
+    cancelled: order.cancelled.v1
 
   payment:
-    confirmed: prod-payment-confirmed
-    failed: prod-payment-failed
+    confirmed: payment.confirmed.v1
+    failed: payment.failed.v1
+
+  booking:
+    payment-completed: mentoring.booking.payment_completed.v1
+    payment-failed: mentoring.booking.payment_failed.v1
+    accepted: mentoring.booking.accepted.v1
+    rejected: mentoring.booking.rejected.v1
+    canceled: mentoring.booking.canceled.v1
+    requested: mentoring.booking.requested.v1
+    pending-approval: mentoring.booking.pending_approval.v1
