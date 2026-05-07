@@ -1,0 +1,7 @@
+topics:
+  order:
+    completed: prod-order-completed
+
+  payment:
+    confirmed: prod-payment-confirmed
+    failed: prod-payment-failed
