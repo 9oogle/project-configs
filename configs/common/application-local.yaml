@@ -1,3 +1,9 @@
 spring:
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9094}
+    properties:
+      security.protocol: PLAINTEXT
+      ssl.endpoint.identification.algorithm: ""
+    ssl:
+      trust-store-location: ""
+      trust-store-password: ""
