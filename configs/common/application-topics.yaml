@@ -11,7 +11,9 @@ topics:
 
   payment:
     confirmed: payment.confirmed.v1
-    failed: payment.failed.v1
+    confirm-failed: payment.confirm-failed.v1
+    canceled: payment.canceled.v1
+    cancel-failed: payment.cancel-failed.v1
 
   booking:
     payment-completed: mentoring.booking.payment_completed.v1
