@@ -29,9 +29,6 @@ spring:
       circuitbreaker:
         enabled: true
 
-  kafka:
-    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
-
 # common Feign timeout setting
 feign:
   client:

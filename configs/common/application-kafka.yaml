@@ -1,14 +1,14 @@
 spring:
   kafka:
     # 1. 공통 접속 및 보안(SSL) 설정
-    bootstrap-servers: ${BOOTSTRAP_SERVERS:34.47.101.35:9092,34.22.75.156:9092,34.50.11.167:9092}
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
     properties:
       security.protocol: SSL
       # 호스트네임 검증 알고리즘을 빈 값으로 설정하여 비활성화
       ssl.endpoint.identification.algorithm: ""
     ssl:
       # 파일 경로 (src/main/resources/ssl/ 하위에 파일이 있어야 함)
-      trust-store-location: classpath:ssl/kafka.server.truststore.jks
+      trust-store-location: classpath:ssl/kafka.truststore.jks
       trust-store-password: ${TRUST_STORE_PASSWORD}
 
     # 2. 프로듀서 설정 (신뢰성 & 비동기)
@@ -29,7 +29,7 @@ spring:
     # 3. 컨슈머 및 컨슈머 그룹 설정
     consumer:
       # 컨슈머 그룹 ID 설정 (기본값)
-      group-id: application-service-group # 적절한 컨슈머 그룹 설정 / 오프셋의 기준
+      group-id: ${spring.application.name}
       # 수동 커밋을 위해 자동 커밋 꺼짐
       enable-auto-commit: false
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
