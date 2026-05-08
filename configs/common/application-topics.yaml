@@ -1,13 +1,13 @@
 topics:
   order:
     payment-pending: order.payment-pending.v1
-    payment-cancel: order.payment-cancel.v1
+    payment-cancel: order.payment-canceled.v1
     notification-completed: order.notification-completed.v1
-    notification-cancelled: order.notification-cancelled.v1
+    notification-cancelled: order.notification-canceled.v1
     lecture-completed: order.lecture-completed.v1
-    lecture-cancelled: order.lecture-cancelled.v1
+    lecture-cancelled: order.lecture-canceled.v1
     mentoring-completed: order.mentoring-completed.v1
-    mentoring-cancelled: order.mentoring-cancelled.v1
+    mentoring-cancelled: order.mentoring-canceled.v1
 
   payment:
     confirmed: payment.confirmed.v1
