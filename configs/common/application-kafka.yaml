@@ -1,0 +1,72 @@
+spring:
+  kafka:
+    # 1. 공통 접속 및 보안(SSL) 설정
+    bootstrap-servers: ${BOOTSTRAP_SERVERS:34.47.101.35:9092,34.22.75.156:9092,34.50.11.167:9092}
+    properties:
+      security.protocol: SSL
+      # 호스트네임 검증 알고리즘을 빈 값으로 설정하여 비활성화
+      ssl.endpoint.identification.algorithm: ""
+    ssl:
+      # 파일 경로 (src/main/resources/ssl/ 하위에 파일이 있어야 함)
+      trust-store-location: classpath:ssl/kafka.server.truststore.jks
+      trust-store-password: ${TRUST_STORE_PASSWORD}
+
+    # 2. 프로듀서 설정 (신뢰성 & 비동기)
+    producer:
+      # acks=all: 리더와 모든 팔로워(ISR) 복제 확인
+      acks: all
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # JsonSerializer 사용 시 객체를 JSON 문자열로 자동 변환하여 전송
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      properties:
+        enable.idempotence: true # 멱등성 보장 (중복 방지), 기본값 true
+        max.block.ms: 10000 # 연결 대기 시간을 10초로 제한
+        max.in.flight.requests.per.connection: 5 # 순서 보장 및 성능 최적화
+        retries: 2147483647 # 사실상 무한 재시도 (delivery.timeout.ms 내에서)
+        #retries: 3 # 재시도 횟수
+        delivery.timeout.ms: 120000 # 2분 동안은 전송 시도
+
+    # 3. 컨슈머 및 컨슈머 그룹 설정
+    consumer:
+      # 컨슈머 그룹 ID 설정 (기본값)
+      group-id: application-service-group # 적절한 컨슈머 그룹 설정 / 오프셋의 기준
+      # 수동 커밋을 위해 자동 커밋 꺼짐
+      enable-auto-commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      # 역직렬화 실패 시 에러 핸들러로 위임하기 위해 ErrorHandlingDeserializer 사용
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      # 새로운 그룹이 시작할 때 오프셋 위치 (가장 처음부터)
+      auto-offset-reset: earliest
+      properties:
+        # 세션 타임아웃: 컨슈머가 살아있는지 확인하는 시간 (30초)
+        session.timeout.ms: 30000
+        # 최대 폴링 간격: 로직 처리가 너무 길어지면 그룹에서 제외됨 (5분)
+        max.poll.interval.ms: 300000
+        # 실제 데이터 변환에 사용할 데시리얼라이저 클래스 지정
+        spring.deserializer.value.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
+        # 역직렬화를 허용할 패키지 범위 설정 (전체 허용)
+        spring.json.trusted.packages: "*"
+        # 헤더의 타입 정보 대신 리스너 메서드의 파라미터 타입을 우선 사용하여 패키지 불일치 해결
+        spring.json.use.type.headers: false
+
+    # 4. 리스너(컨테이너) 설정
+    listener:
+      # 수동 커밋 모드 (acknowledge 호출 시 즉시 커밋)
+      ack-mode: manual_immediate
+      # 병렬 처리 스레드 개수 (파티션 개수에 맞춰 설정 권장)
+      concurrency: 3
+
+      # [DLT 설정]
+      # 총 시도 횟수: 1회 실행 + 2회 재시도 = 총 3회
+      delivery-attempts: 3
+
+      # 백오프 정책: 실패 시 다시 시도하기 전 대기 시간 정의
+      back-off:
+        initial-interval: 2000ms  # 첫 재시도 전 2초 대기
+        multiplier: 2.0           # 실패할 때마다 대기 시간 2배 증가 (2s -> 4s -> 8s)
+        max-interval: 10000ms     # 최대 대기 시간 10초로 제한
+
+logging:
+  level:
+    org.springframework.kafka: DEBUG
+    org.apache.kafka: INFO
