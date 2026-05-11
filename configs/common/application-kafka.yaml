@@ -68,5 +68,5 @@ spring:
 
 logging:
   level:
-    org.springframework.kafka: DEBUG
-    org.apache.kafka: INFO
+    org.springframework.kafka: INFO
+    org.apache.kafka: WARN
