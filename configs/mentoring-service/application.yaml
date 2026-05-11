@@ -10,7 +10,9 @@ spring:
         default_batch_fetch_size: 100
 
   profiles:
-    include: kafka
+    group:
+      dev: "kafka"
+      prod: "kafka"
 
 resilience4j:
   circuitbreaker:

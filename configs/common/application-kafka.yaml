@@ -8,7 +8,7 @@ spring:
       ssl.endpoint.identification.algorithm: ""
     ssl:
       # 파일 경로 (src/main/resources/ssl/ 하위에 파일이 있어야 함)
-      trust-store-location: classpath:ssl/kafka.truststore.jks
+      trust-store-location: file:/app/ssl/kafka.truststore.jks
       trust-store-password: ${TRUST_STORE_PASSWORD}
 
     # 2. 프로듀서 설정 (신뢰성 & 비동기)
