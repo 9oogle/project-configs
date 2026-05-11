@@ -10,6 +10,8 @@ topics:
     mentoring-cancelled: order.mentoring-canceled.v1
 
   payment:
+    created: payment.created.v1
+    created-failed: payment.created-failed.v1
     confirmed: payment.confirmed.v1
     confirm-failed: payment.confirm-failed.v1
     canceled: payment.canceled.v1
