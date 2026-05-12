@@ -1,0 +1,48 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        default_schema: notification_db
+    generate-ddl: false
+
+server:
+  port: 9012
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${random.value}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, info, metrics, prometheus
+  endpoint:
+    health:
+      show-details: always
+    prometheus:
+      enabled: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: "${ZIPKIN_ENDPOINT:http://localhost:9411/api/v2/spans}"
+
+springdoc:
+  version: '1.0.0'
+
+aws:
+  ses:
+    access-key: ${AWS_ACCESS_KEY}
+    secret-key: ${AWS_SECRET_KEY}
+    send-mail-from: ${ADMIN_EMAIL}
+  region: ${AWS_REGION}
