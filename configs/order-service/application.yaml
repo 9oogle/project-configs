@@ -1,4 +1,9 @@
 spring:
+  profiles:
+    group:
+      dev: "kafka"
+      prod: "kafka"
+
   jpa:
     properties:
       hibernate:

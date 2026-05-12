@@ -35,9 +35,6 @@ spring:
           min-idle: 4
           max-wait: 2000ms
 
-  profiles:
-    include: kafka
-
 resilience4j:
   circuitbreaker:
     instances:

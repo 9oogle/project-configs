@@ -69,7 +69,15 @@ springdoc:
   paths-to-match:
     - /**
 
-# 공통 로깅 레벨
+# 공통 로깅 레벨 및 rotation
 logging:
+  file:
+    name: /app/logs/${spring.application.name}.log
+  logback:
+    rollingpolicy:
+      file-name-pattern: /app/logs/${spring.application.name}.%d{yyyy-MM-dd}.%i.log.gz
+      max-file-size: 50MB
+      max-history: 30
+      total-size-cap: 1GB
   level:
     root: INFO
