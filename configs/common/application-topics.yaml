@@ -26,3 +26,7 @@ topics:
     canceled: mentoring.booking.canceled.v1
     requested: mentoring.booking.requested.v1
     pending-approval: mentoring.booking.pending_approval.v1
+
+  notification:
+    email-send-requested: notification.email-send.v1
+    bulk-email-send-requested: notification.bulk-email-send.v1
