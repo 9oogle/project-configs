@@ -19,22 +19,6 @@ spring:
       minimum-idle: 10
       connection-timeout: 30000
 
-  data:
-    redis:
-      sentinel:
-        master: mymaster
-        nodes:
-          - ${REDIS_SENTINEL_1}
-          - ${REDIS_SENTINEL_2}
-          - ${REDIS_SENTINEL_3}
-      password: ${REDIS_PASSWORD}
-      lettuce:
-        pool:
-          max-active: 16
-          max-idle: 16
-          min-idle: 4
-          max-wait: 2000ms
-
 resilience4j:
   circuitbreaker:
     instances:
