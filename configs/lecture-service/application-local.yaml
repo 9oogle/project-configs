@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/lecture_db
+    url: jdbc:postgresql://localhost:5432/goggles
     username: goggles
     password: goggles
     driver-class-name: org.postgresql.Driver
