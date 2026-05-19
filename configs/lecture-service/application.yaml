@@ -2,6 +2,11 @@ spring:
   application:
     name: lecture-service
 
+  profiles:
+    group:
+      dev: "kafka"
+      prod: "kafka"
+
   jpa:
     hibernate:
       ddl-auto: validate

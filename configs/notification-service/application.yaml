@@ -1,0 +1,5 @@
+spring:
+  profiles:
+    group:
+      dev: "dev,topics,kafka"
+      prod: "prod,kafka,topics"
