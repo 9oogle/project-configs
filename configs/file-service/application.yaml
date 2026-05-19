@@ -28,11 +28,11 @@ spring:
     virtual:
       enabled: true
 
-  servlet:
-    multipart:
-      max-file-size: 10MB
-      max-request-size: 50MB
-      file-size-threshold: 20MB
+servlet:
+  multipart:
+    max-file-size: 500MB
+    max-request-size: 500MB
+    file-size-threshold: 1MB    # 1MB 넘으면 디스크 임시저장
 
 server:
   port: 9012
