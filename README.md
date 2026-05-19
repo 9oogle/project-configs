@@ -1,5 +1,7 @@
 # 📁 project-configs
 
+> 📖 [중앙 Wiki에서 보기](https://github.com/9oogle/.github/wiki/project-configs)
+
 Spring Cloud Config Server에서 사용하는 각 서비스의 설정 파일 저장소입니다.
 
 ---
