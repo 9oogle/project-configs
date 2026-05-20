@@ -7,7 +7,7 @@ spring:
       ddl-auto: validate
     properties:
       hibernate:
-        default_schema: users
+        default_schema: user_db
 
   flyway:
     enabled: true
@@ -18,19 +18,17 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: "https://keycloak.code-factory.co.kr/realms/spartahub/protocol/openid-connect/certs"
-          issuer-uri: "https://keycloak.code-factory.co.kr/realms/spartahub"
+          jwk-set-uri: "http://localhost:9090/realms/goggles/protocol/openid-connect/certs"
+          issuer-uri: "http://localhost:9090/realms/goggles"
 
-# 키클록 설정
 keycloak:
-  server-url: "https://keycloak.code-factory.co.kr"
-  realm: ${KEYCLOAK_REALM}
-  client-id: ${KEYCLOAK_CLIENT_ID}
+  server-url: "http://localhost:9090"
+  realm: goggles
+  client-id: user-service
   client-secret: ${KEYCLOAK_CLIENT_SECRET}
   admin-username: ${KEYCLOAK_ADMIN_USERNAME}
   admin-password: ${KEYCLOAK_ADMIN_PASSWORD}
 
-# 로그 설정
 logging:
   level:
     org.hibernate.type: trace
@@ -39,7 +37,3 @@ logging:
 server:
   port: 9010
 
-eureka:
-  instance:
-    prefer-ip-address: true
-    instance-id: ${spring.application.name}:${random.value}
