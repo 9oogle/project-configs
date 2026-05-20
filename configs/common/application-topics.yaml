@@ -9,6 +9,8 @@ topics:
     lecture-canceled: order.lecture-canceled.v1
     mentoring-completed: order.mentoring-completed.v1
     mentoring-canceled: order.mentoring-canceled.v1
+    notification-completed: order.notification-completed.v1
+    notification-canceled: order.notification-canceled.v1
 
   payment:
     created: payment.created.v1

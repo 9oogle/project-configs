@@ -1,8 +1,9 @@
 spring:
   profiles:
     group:
-      dev: "kafka"
-      prod: "kafka"
+      dev: "kafka,topics"
+      prod: "kafka,topics"
+
 
   jpa:
     properties:
